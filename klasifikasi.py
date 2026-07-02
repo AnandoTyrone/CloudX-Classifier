@@ -14,7 +14,7 @@ def load_h5_model(path):
     return tf.keras.models.load_model(path)
 
 def show_klasifikasi():
-    st.markdown("<h1 style='text-align: center; color: #0369a1; font-family: sans-serif; font-weight: 800; font-size: 2.5rem; margin-bottom: 0px;'>☁️ CloudX Intelligent Classifier</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center; color: #0369a1; font-family: sans-serif; font-weight: 800; font-size: 2.5rem; margin-bottom: 0px;'>☁️ CloudX Classifier</h1>", unsafe_allow_html=True)
     st.markdown("<p style='text-align: center; color: #475569; font-size: 1.15rem; margin-top: 5px; margin-bottom: 0px;'>Unggah foto atmosfer Anda untuk mengidentifikasi jenis awan secara otomatis.</p>", unsafe_allow_html=True)
     st.markdown("<div class='premium-bar'></div>", unsafe_allow_html=True)
 
