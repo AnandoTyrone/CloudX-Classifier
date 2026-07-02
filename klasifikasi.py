@@ -61,7 +61,7 @@ def show_klasifikasi():
             
             st.markdown(f"""
                 <div style='background-color: #ffffff; padding: 22px; border-radius: 16px; border-left: 6px solid #0284c7; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); margin-bottom: 15px;'>
-                    <p style='margin:0; font-size:0.85rem; color:#64748b; font-weight:bold; text-transform:uppercase;'>Hasil Analisis AI</p>
+                    <p style='margin:0; font-size:0.85rem; color:#64748b; font-weight:bold; text-transform:uppercase;'>Jenis Awan</p>
                     <h2 style='margin:5px 0; color:#0369a1; font-size:2.2rem; font-weight:800;'>{label_awan}</h2>
                     <p style='margin:0; font-size:1.05rem; color:#0f172a;'>Confidence Percentage: <b>{confidence_score:.2f}%</b></p>
                 </div>
