@@ -16,7 +16,12 @@ try:
 except Exception as e:
     # Kode ini akan menampilkan biang kerok eror yang sesungguhnya di layar web
     st.error(f"Gagal memuat model. Eror asli dari TensorFlow: {e}")
-
+# Contoh penulisan di dalam fungsi klasifikasi Anda:
+try:
+    model = tf.keras.models.load_model(MODEL_PATH)
+except Exception as e:
+    st.error(f"Gagal memuat model. Eror asli dari TensorFlow: {e}")
+    
 # 2. Daftar 10 Kelas Awan (Pastikan urutannya sama persis dengan folder dataset) [cite: 20]
 class_names = [
     'Altocumulus', 'Altostratus', 'Cirrocumulus', 'Cirrostratus', 'Cirrus',

@@ -4,6 +4,9 @@ import os
 import numpy as np
 from PIL import Image
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, 'model_klasifikasi_awan.keras')
+
 def show_klasifikasi():
     # HEADER KLASIFIKASI SIMETRIS
     st.markdown("<h1 style='text-align: center; color: #0369a1; font-family: sans-serif; font-weight: 800; font-size: 2.5rem; margin-bottom: 0px;'>☁️ CloudX Intelligent Classifier</h1>", unsafe_allow_html=True)
@@ -23,7 +26,13 @@ def show_klasifikasi():
         return
     
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-MODEL_PATH = os.path.join(BASE_DIR, 'model_klasifikasi_awan.keras')
+    MODEL_PATH = os.path.join(BASE_DIR, 'model_klasifikasi_awan.keras')
+
+    # Contoh penulisan di dalam fungsi klasifikasi Anda:
+try:
+    model = tf.keras.models.load_model(MODEL_PATH)
+except Exception as e:
+    st.error(f"Gagal memuat model. Eror asli dari TensorFlow: {e}")
 
 # 2. Muat model dan pancing eror aslinya jika gagal
 try:
