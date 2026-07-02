@@ -1,5 +1,6 @@
 import streamlit as st
 import tensorflow as tf
+import os 
 import numpy as np
 from PIL import Image
 
@@ -20,6 +21,17 @@ def show_klasifikasi():
     except Exception as e:
         st.error("Gagal memuat model. Pastikan file 'model_klasifikasi_awan.keras' sudah siap di folder proyek Anda.")
         return
+    
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, 'model_klasifikasi_awan.keras')
+
+# 2. Muat model dan pancing eror aslinya jika gagal
+try:
+    # Menggunakan MODEL_PATH absolut agar server tidak tersesat mencari file
+    model = tf.keras.models.load_model(MODEL_PATH)
+except Exception as e:
+    # Kode ini akan menampilkan biang kerok eror yang sesungguhnya di layar web
+    st.error(f"Gagal memuat model. Eror asli dari TensorFlow: {e}")
 
     class_names = [
         'Altocumulus', 'Altostratus', 'Cirrocumulus', 'Cirrostratus', 'Cirrus',

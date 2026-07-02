@@ -1,9 +1,21 @@
 import numpy as np
+import os 
 import tensorflow as tf
 from tensorflow.keras.preprocessing import image
 
 # 1. Load Model yang Sudah Dilatih 
 model = tf.keras.models.load_model("model_klasifikasi_awan.keras")
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, 'model_klasifikasi_awan.keras')
+
+# 2. Muat model dan pancing eror aslinya jika gagal
+try:
+    # Menggunakan MODEL_PATH absolut agar server tidak tersesat mencari file
+    model = tf.keras.models.load_model(MODEL_PATH)
+except Exception as e:
+    # Kode ini akan menampilkan biang kerok eror yang sesungguhnya di layar web
+    st.error(f"Gagal memuat model. Eror asli dari TensorFlow: {e}")
 
 # 2. Daftar 10 Kelas Awan (Pastikan urutannya sama persis dengan folder dataset) [cite: 20]
 class_names = [
