@@ -117,7 +117,8 @@ history = model.fit(
 )
 
 # 4. SAVE MODEL TERBAIK
-model.save("model_klasifikasi_awan.keras")
-print("\nURUTAN KELAS YANG BENAR UNTUK APP.PY:")
+# Simpan model ke format legacy .h5 yang sangat stabil di semua versi server Linux
+model.save("model_klasifikasi_awan.h5")
+print("✅ Model sukses disimpan dalam format HDF5 (.h5)!")
 print(train_generator.class_indices)
 print("\n🎉 Model cerdas yang sesungguhnya berhasil disimpan!")
