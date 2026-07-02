@@ -1,16 +1,25 @@
 import streamlit as st
-import tensorflow as tf
 import os 
 import numpy as np
 from PIL import Image
 
-# DEFINISIKAN PATH ABSOLUT GLOBAL DI ATAS (Mencegah NameError)
+# 1. GUNAKAN KERAS MURNI UNTUK PEMUATAN MODEL (Bypass Bug tf.keras)
+try:
+    import keras
+    from keras.applications.mobilenet_v2 import preprocess_input
+except ImportError:
+    import tensorflow as tf
+    from tensorflow import keras
+    from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
+
+# DEFINISIKAN PATH ABSOLUT GLOBAL
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(BASE_DIR, 'model_klasifikasi_awan.keras')
 
 @st.cache_resource
 def load_my_model(path):
-    return tf.keras.models.load_model(path)
+    # Menggunakan keras murni untuk menghindari error deserialisasi Keras 3
+    return keras.models.load_model(path)
 
 def show_klasifikasi():
     # HEADER KLASIFIKASI SIMETRIS
@@ -23,7 +32,7 @@ def show_klasifikasi():
     try:
         model = load_my_model(MODEL_PATH)
     except Exception as e:
-        st.error(f"Gagal memuat model. Eror asli dari TensorFlow: {e}")
+        st.error(f"Gagal memuat model. Eror asli dari Keras/TensorFlow: {e}")
         st.warning("Pastikan file 'model_klasifikasi_awan.keras' sudah sukses terunggah di repositori GitHub Anda.")
         return
     
@@ -55,7 +64,9 @@ def show_klasifikasi():
                 
                 img_array = np.expand_dims(img_array, axis=0)
                 img_array = img_array.astype(np.float32)
-                img_array = tf.keras.applications.mobilenet_v2.preprocess_input(img_array)
+                
+                # Memproses gambar sesuai arsitektur MobileNetV2
+                img_array = preprocess_input(img_array)
                 
                 predictions = model.predict(img_array)
                 highest_prob_index = np.argmax(predictions[0])
