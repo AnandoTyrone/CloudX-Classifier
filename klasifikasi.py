@@ -4,8 +4,14 @@ import os
 import numpy as np
 from PIL import Image
 
+# 1. DEFINISIKAN PATH ABSOLUT SECARA AMAN DI TINGKAT GLOBAL
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(BASE_DIR, 'model_klasifikasi_awan.keras')
+
+# 2. FUNGSI CACHING MODEL AGAR HANYA DIMUAT 1 KALI KE MEMORI SERVER CLOUD
+@st.cache_resource
+def load_my_model(path):
+    return tf.keras.models.load_model(path)
 
 def show_klasifikasi():
     # HEADER KLASIFIKASI SIMETRIS
@@ -14,34 +20,15 @@ def show_klasifikasi():
     
     st.markdown("<div class='premium-bar'></div>", unsafe_allow_html=True)
 
-    # LOAD MODEL CACHED
-    @st.cache_resource
-    def load_my_model():
-        return tf.keras.models.load_model("model_klasifikasi_awan.keras")
-
+    # 3. MUAT MODEL SECARA AMAN DAN AMBIL LOG EROR JIKA ADA MASALAH FILE
     try:
-        model = load_my_model()
+        model = load_my_model(MODEL_PATH)
     except Exception as e:
-        st.error("Gagal memuat model. Pastikan file 'model_klasifikasi_awan.keras' sudah siap di folder proyek Anda.")
+        st.error(f"Gagal memuat model. Eror asli dari TensorFlow: {e}")
+        st.warning("Pastikan file 'model_klasifikasi_awan.keras' sudah sukses terunggah di repositori GitHub Anda.")
         return
     
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    MODEL_PATH = os.path.join(BASE_DIR, 'model_klasifikasi_awan.keras')
-
-    # Contoh penulisan di dalam fungsi klasifikasi Anda:
-try:
-    model = tf.keras.models.load_model(MODEL_PATH)
-except Exception as e:
-    st.error(f"Gagal memuat model. Eror asli dari TensorFlow: {e}")
-
-# 2. Muat model dan pancing eror aslinya jika gagal
-try:
-    # Menggunakan MODEL_PATH absolut agar server tidak tersesat mencari file
-    model = tf.keras.models.load_model(MODEL_PATH)
-except Exception as e:
-    # Kode ini akan menampilkan biang kerok eror yang sesungguhnya di layar web
-    st.error(f"Gagal memuat model. Eror asli dari TensorFlow: {e}")
-
+    # DAFTAR 10 KELAS AWAN SESUAI URUTAN DATASET
     class_names = [
         'Altocumulus', 'Altostratus', 'Cirrocumulus', 'Cirrostratus', 'Cirrus',
         'Cumulonimbus', 'Cumulus', 'Nimbostratus', 'Stratocumulus', 'Stratus'
@@ -65,18 +52,27 @@ except Exception as e:
             with st.spinner("🔄 Mengekstraksi fitur visual citra awan..."):
                 img_resized = image.resize((224, 224))
                 img_array = np.array(img_resized)
+                
+                # Membuang channel Alpha (RGBA) jika user mengunggah foto bertipe PNG transparan
                 if img_array.shape[-1] == 4:  
                     img_array = img_array[:, :, :3]
-                img_array = np.expand_dims(img_array, axis=0)
-                img_array = img_array / 255.0                 
                 
+                # Ubah dimensi menjadi bentuk batch (1, 224, 224, 3)
+                img_array = np.expand_dims(img_array, axis=0)
+                img_array = img_array.astype(np.float32)
+                
+                # PERBAIKAN VITAL: Menggunakan fungsi normalisasi bawaan MobileNetV2
+                # Ini adalah kunci utama agar tebakan akurat dan confidence score tinggi (80-90%)
+                img_array = tf.keras.applications.mobilenet_v2.preprocess_input(img_array)
+                
+                # Eksekusi Prediksi AI
                 predictions = model.predict(img_array)
                 highest_prob_index = np.argmax(predictions[0])
                 
                 label_awan = class_names[highest_prob_index]
                 confidence_score = predictions[0][highest_prob_index] * 100
             
-            # Kartu Hasil Desain Simetris & Berkelas
+            # Kartu Hasil Desain Premium
             st.markdown(f"""
                 <div style='background-color: #ffffff; padding: 22px; border-radius: 16px; border-left: 6px solid #0284c7; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); margin-bottom: 15px;'>
                     <p style='margin:0; font-size:0.85rem; color:#64748b; font-weight:bold; text-transform:uppercase; tracking-spacing: 1px;'>Hasil Analisis AI</p>

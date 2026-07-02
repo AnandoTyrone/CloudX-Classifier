@@ -3,39 +3,43 @@ import os
 import tensorflow as tf
 from tensorflow.keras.preprocessing import image
 
-# 1. Load Model yang Sudah Dilatih 
-model = tf.keras.models.load_model("model_klasifikasi_awan.keras")
-
+# 1. SET LOKASI PATH ABSOLUT MODEL SECARA AMAN
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(BASE_DIR, 'model_klasifikasi_awan.keras')
 
-# 2. Muat model dan pancing eror aslinya jika gagal
-try:
-    # Menggunakan MODEL_PATH absolut agar server tidak tersesat mencari file
-    model = tf.keras.models.load_model(MODEL_PATH)
-except Exception as e:
-    # Kode ini akan menampilkan biang kerok eror yang sesungguhnya di layar web
-    st.error(f"Gagal memuat model. Eror asli dari TensorFlow: {e}")
-# Contoh penulisan di dalam fungsi klasifikasi Anda:
+print("🔄 Sedang memuat model AI ke memori lokal...")
+
+# 2. MUAT MODEL TENSORFLOW (CUKUP 1 KALI SAJA)
 try:
     model = tf.keras.models.load_model(MODEL_PATH)
+    print("✅ Model klasifikasi awan berhasil dimuat dengan sempurna!")
 except Exception as e:
-    st.error(f"Gagal memuat model. Eror asli dari TensorFlow: {e}")
-    
-# 2. Daftar 10 Kelas Awan (Pastikan urutannya sama persis dengan folder dataset) [cite: 20]
+    print(f"❌ GAGAL MEMUAT MODEL! Eror asli dari TensorFlow: {e}")
+    print("Pastikan file 'model_klasifikasi_awan.keras' berada di folder yang sama dengan script ini.")
+    exit()
+
+# 3. DAFTAR 10 KELAS AWAN (URUTAN WAJIB SAMA DENGAN DATASET)
 class_names = [
     'Altocumulus', 'Altostratus', 'Cirrocumulus', 'Cirrostratus', 'Cirrus',
     'Cumulonimbus', 'Cumulus', 'Nimbostratus', 'Stratocumulus', 'Stratus'
-] # Total 10 Jenis Awan [cite: 20, 25, 27, 29]
+]
 
 def prediksi_jenis_awan(image_path):
-    # Preprocessing gambar input agar sesuai format training (224x224) 
+    # Validasi keselamatan: Cek apakah file gambar target memang ada
+    if not os.path.exists(image_path):
+        print(f"⚠️ Eror: File gambar '{image_path}' tidak ditemukan! Silakan periksa kembali path fotonya.")
+        return
+
+    # Prapemrosesan Gambar Target (Dimensi 224x224)
     img = image.load_img(image_path, target_size=(224, 224))
     img_array = image.img_to_array(img)
-    img_array = np.expand_dims(img_array, axis=0) # Mengubah ke bentuk batch (1, 224, 224, 3)
-    img_array = img_array / 255.0                 # Normalisasi nilai piksel 
+    img_array = np.expand_dims(img_array, axis=0) # Ubah ke bentuk batch (1, 224, 224, 3)
+    img_array = img_array.astype(np.float32)
 
-    # Melakukan prediksi 
+    # PERBAIKAN UTAMA: Menggunakan fungsi normalisasi bawaan MobileNetV2 (-1 s.d +1)
+    img_array = tf.keras.applications.mobilenet_v2.preprocess_input(img_array)
+
+    # Eksekusi Prediksi AI 
     predictions = model.predict(img_array)
     
     # Mengambil indeks dengan nilai probabilitas tertinggi
@@ -45,15 +49,15 @@ def prediksi_jenis_awan(image_path):
     label_awan = class_names[highest_prob_index]
     confidence_score = predictions[0][highest_prob_index] * 100
 
-    # Output Jawaban Akhir (Sesuai Target Output Proposal Anda) 
-    print("\n" + "="*40)
-    print("      HASIL DETEKSI VISI KOMPUTER")
-    print("="*40)
-    print(f"Jenis Awan       : {label_awan}")
-    print(f"Confidence Score : {confidence_score:.2f}%") # Contoh output: 'Cumulonimbus - 95%' 
-    print("="*40)
+    # Tampilan Output Akhir di Terminal (Sesuai Standar Proposal Proyek)
+    print("\n" + "="*45)
+    print("      HASIL DETEKSI AI VISI KOMPUTER")
+    print("="*45)
+    print(f" Jenis Awan       : {label_awan}")
+    print(f" Confidence Score : {confidence_score:.2f}%")
+    print("="*45)
 
-# --- CARA MENGGUNAKAN ---
-# Ganti dengan path foto awan yang ingin Anda tes di laptop/VS Code Anda
+# --- CARA TESTING DI LAPTOP / VS CODE ---
+# Ganti nama file di bawah ini dengan foto awan asli yang ingin kamu tes di folder proyekmu
 test_image_path = "awan_cumulonimbus_test.jpg" 
 prediksi_jenis_awan(test_image_path)
