@@ -69,13 +69,13 @@ def show_klasifikasi():
             
             st.progress(int(confidence_score))
             
-            st.markdown("<p style='font-weight: 700; color: #1e293b; margin-top: 15px; margin-bottom: 5px;'>✈️ Dampak Navigasi Udara:</p>", unsafe_allow_html=True)
+            st.markdown("<p style='font-weight: 700; color: #1e293b; margin-top: 15px; margin-bottom: 5px;'>Catatan:</p>", unsafe_allow_html=True)
             if label_awan == "Cumulonimbus":
-                st.error("⚠️ **BAHAYA EKSTREM!** Terdeteksi struktur awan Cumulonimbus. Risiko badai petir dan turbulensi parah.")
+                st.error("⚠️ **BAHAYA EKSTREM!** Terdeteksi struktur awan Cumulonimbus. Risiko badai petir.")
             elif label_awan in ["Nimbostratus", "Stratus"]:
-                st.warning("🌧️ **PERINGATAN CUACA:** Terdeteksi awan pembawa hujan. Jarak pandang (visibility) berkurang.")
+                st.warning("🌧️ **PERINGATAN CUACA:** Terdeteksi awan pembawa hujan.")
             else:
-                st.success("☀️ **KONDISI AMAN:** Jenis awan stabil dan aman untuk penerbangan.")
+                st.success("☀️ **KONDISI AMAN:** Jenis awan stabil")
 
     st.markdown("<br><br><div class='premium-bar' style='height: 2px; opacity:0.3;'></div>", unsafe_allow_html=True)
     st.caption("<p style='text-align: center; color: #94a3b8;'>Proyek Individu Computer Vision • Pengembangan Sistem Klasifikasi Awan Otomatis</p>", unsafe_allow_html=True)

@@ -2,8 +2,8 @@ import streamlit as st
 
 def show_home():
     # HEADER UTAMA SIMETRIS
-    st.markdown("<h1 style='text-align: center; color: #0369a1; font-family: sans-serif; font-weight: 800; font-size: 2.5rem; margin-bottom: 0px;'>☁️ Welcome to CloudX Intelligent</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center; color: #475569; font-size: 1.15rem; margin-top: 5px; margin-bottom: 0px;'>Platform Edukasi dan Identifikasi Jenis Awan Berbasis Komputer Visi & Deep Learning</p>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center; color: #0369a1; font-family: sans-serif; font-weight: 800; font-size: 2.5rem; margin-bottom: 0px;'>☁️ Welcome to CloudX Classifier</h1>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; color: #475569; font-size: 1.15rem; margin-top: 5px; margin-bottom: 0px;'>Platform Identifikasi Jenis Awan Menggunakan CNN</p>", unsafe_allow_html=True)
     
     # Bar Penyelaras Desain
     st.markdown("<div class='premium-bar'></div>", unsafe_allow_html=True)
@@ -13,8 +13,8 @@ def show_home():
     st.markdown("""
     <p style='text-align: justify; color: #334155; line-height: 1.6; font-size: 1rem;'>
     Awan adalah massa terlihat dari tetesan air terkompresi atau kristal beku yang menggantung di atmosfer di atas permukaan bumi. 
-    Mengidentifikasi jenis awan sangat krusial bagi bidang <b>meteorologi, prakiraan cuaca, dan keselamatan navigasi penerbangan</b>.
-    Aplikasi ini dilatih menggunakan dataset <b>Howard-Cloud-X</b> untuk mengenali 10 Jenis Awan Dasar berdasarkan ketinggian pembentukannya.
+    Mengidentifikasi jenis awan memberikan pengetahuan terkait awan dan cuaca yang dibawa oleh awan tersebut.
+    Website ini dilatih menggunakan dataset <b>Howard-Cloud-X</b> untuk mengenali 10 Jenis Awan Dasar berdasarkan ketinggian pembentukannya.
     </p>
     """, unsafe_allow_html=True)
     
