@@ -5,7 +5,7 @@ from tensorflow.keras.preprocessing import image
 
 # 1. SET LOKASI PATH ABSOLUT MODEL SECARA AMAN
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-MODEL_PATH = os.path.join(BASE_DIR, 'model_klasifikasi_awan.keras')
+MODEL_PATH = os.path.join(BASE_DIR, 'model_klasifikasi_awan.h5')
 
 print("🔄 Sedang memuat model AI ke memori lokal...")
 
