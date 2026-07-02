@@ -4,42 +4,26 @@ import numpy as np
 from PIL import Image
 import tensorflow as tf
 
-# DEFINISIKAN PATH FILE BOBOT
+# DEFINISIKAN PATH ABSOLUT FILE MODEL .H5 UTUH
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-WEIGHTS_PATH = os.path.join(BASE_DIR, 'model_bobot_awan.weights.h5')
+MODEL_PATH = os.path.join(BASE_DIR, 'model_klasifikasi_awan.h5')
 
 @st.cache_resource
-def load_reconstructed_model(weights_path):
-    # 1. Bangun ulang arsitektur persis seperti saat training
-    base_model = tf.keras.applications.MobileNetV2(
-        input_shape=(224, 224, 3),
-        include_top=False,
-        weights=None # Kosongkan karena kita akan pakai bobot sendiri
-    )
-    base_model.trainable = False
-    
-    # Re-assembly layer sequential
-    model = tf.keras.Sequential([
-        base_model,
-        tf.keras.layers.GlobalAveragePooling2D(),
-        tf.keras.layers.Dense(10, activation='softmax') # 10 kelas awan
-    ])
-    
-    # 2. Suntikkan bobot hasil training ke dalam arsitektur kosongan ini
-    model.load_weights(weights_path)
-    return model
+def load_h5_model(path):
+    # Memuat model format .h5 secara aman dan utuh tanpa kendala deserialisasi
+    return tf.keras.models.load_model(path)
 
 def show_klasifikasi():
     st.markdown("<h1 style='text-align: center; color: #0369a1; font-family: sans-serif; font-weight: 800; font-size: 2.5rem; margin-bottom: 0px;'>☁️ CloudX Intelligent Classifier</h1>", unsafe_allow_html=True)
     st.markdown("<p style='text-align: center; color: #475569; font-size: 1.15rem; margin-top: 5px; margin-bottom: 0px;'>Unggah foto atmosfer Anda untuk mengidentifikasi jenis awan secara otomatis.</p>", unsafe_allow_html=True)
     st.markdown("<div class='premium-bar'></div>", unsafe_allow_html=True)
 
-    # MUAT MODEL SUNTIKAN BOBOT SECARA AMAN
+    # MUAT MODEL UTUH SECARA AMAN VIA FORMAT .H5
     try:
-        model = load_reconstructed_model(WEIGHTS_PATH)
+        model = load_h5_model(MODEL_PATH)
     except Exception as e:
-        st.error(f"Gagal merekonstruksi model AI. Eror: {e}")
-        st.warning("Pastikan file 'model_bobot_awan.weights.h5' sudah sukses terunggah di repositori GitHub Anda.")
+        st.error(f"Gagal memuat model klasifikasi (.h5). Eror: {e}")
+        st.warning("Pastikan file 'model_klasifikasi_awan.h5' sudah terunggah sempurna di repositori GitHub Anda.")
         return
     
     class_names = [
