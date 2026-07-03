@@ -25,32 +25,40 @@ def show_home():
     st.markdown("<div style='border-left: 5px solid #38bdf8; padding-left: 10px; margin-bottom: 10px;'><h5 style='margin:0; color:#0369a1;'>🔵 1. AWAN TINGGI (Ketinggian > 6.000 meter - Kristal Es)</h5></div>", unsafe_allow_html=True)
     with st.expander("Lihat Detail Karakteristik Awan Tinggi"):
         st.markdown("""
-        * **Cirrus:** Awan tipis, halus, dan berserat seperti bulu ayam. Menandakan cuaca cerah namun bisa menjadi simbol perubahan pola cuaca atmosfer.
-        * **Cirrocumulus:** Terlihat seperti kumpulan bintik-bintik kecil atau pola sisik ikan yang berjejer rapi di langit.
-        * **Cirrostratus:** Berbentuk seperti kelambu tipis, halus, dan putih transparan yang menutupi langit, sering memicu fenomena indah **Halo Matahari**.
-        """)
+        <ul style='color: #1e293b; font-size: 0.95rem; line-height: 1.6; margin-left: 20px; padding-left: 0;'>
+            <li><b>Cirrus:</b> Awan tipis, halus, dan berserat seperti bulu ayam. Menandakan cuaca cerah namun bisa menjadi simbol perubahan pola cuaca atmosfer.</li>
+            <li><b>Cirrocumulus:</b> Terlihat seperti kumpulan bintik-bintik kecil atau pola sisik ikan yang berjejer rapi di langit.</li>
+            <li><b>Cirrostratus:</b> Berbentuk seperti kelambu tipis, halus, dan putih transparan yang menutupi langit, sering memicu fenomena indah <b>Halo Matahari</b>.</li>
+        </ul>
+        """, unsafe_allow_html=True)
         
     st.markdown("<div style='border-left: 5px solid #22c55e; padding-left: 10px; margin-bottom: 10px;'><h5 style='margin:0; color:#16a34a;'>🟢 2. AWAN MENENGAH (Ketinggian 2.000 - 6.000 meter)</h5></div>", unsafe_allow_html=True)
     with st.expander("Lihat Detail Karakteristik Awan Menengah"):
         st.markdown("""
-        * **Altocumulus:** Berbentuk seperti gumpalan-gumpalan kapas tebal yang berlapis, bergelombang, atau berwujud makarel langit. Berwarna putih hingga abu-abu pucat.
-        * **Altostratus:** Lapisan awan tebal abu-abu atau kebiruan yang menyelimuti langit luas. Matahari hanya terlihat samar-samar (seperti kaca buram).
-        """)
+        <ul style='color: #1e293b; font-size: 0.95rem; line-height: 1.6; margin-left: 20px; padding-left: 0;'>
+            <li><b>Altocumulus:</b> Berbentuk seperti gumpalan-gumpalan kapas tebal yang berlapis, bergelombang, atau berwujud makarel langit. Berwarna putih hingga abu-abu pucat.</li>
+            <li><b>Altostratus:</b> Lapisan awan tebal abu-abu atau kebiruan yang menyelimuti langit luas. Matahari hanya terlihat samar-samar (seperti kaca buram).</li>
+        </ul>
+        """, unsafe_allow_html=True)
         
     st.markdown("<div style='border-left: 5px solid #eab308; padding-left: 10px; margin-bottom: 10px;'><h5 style='margin:0; color:#ca8a04;'>🟡 3. AWAN RENDAH (Ketinggian < 2.000 meter)</h5></div>", unsafe_allow_html=True)
     with st.expander("Lihat Detail Karakteristik Awan Rendah"):
         st.markdown("""
-        * **Stratocumulus:** Awan berbentuk bola-bola besar atau gumpalan bergelombang abu-abu tipis. Jarang menghasilkan hujan berat, umumnya hanya cuaca mendung stabil.
-        * **Stratus:** Lapisan awan abu-abu seragam yang sangat rendah dekat permukaan bumi, menyerupai kabut tinggi. Sering menghasilkan gerimis halus (*drizzle*).
-        """)
+        <ul style='color: #1e293b; font-size: 0.95rem; line-height: 1.6; margin-left: 20px; padding-left: 0;'>
+            <li><b>Stratocumulus:</b> Awan berbentuk bola-bola besar atau gumpalan bergelombang abu-abu tipis. Jarang menghasilkan hujan berat, umumnya hanya cuaca mendung stabil.</li>
+            <li><b>Stratus:</b> Lapisan awan abu-abu seragam yang sangat rendah dekat permukaan bumi, menyerupai kabut tinggi. Sering menghasilkan gerimis halus (<i>drizzle</i>).</li>
+        </ul>
+        """, unsafe_allow_html=True)
         
     st.markdown("<div style='border-left: 5px solid #ef4444; padding-left: 10px; margin-bottom: 10px;'><h5 style='margin:0; color:#dc2626;'>🔴 4. AWAN PERKEMBANGAN VERTIKAL (Konveksi Aktif)</h5></div>", unsafe_allow_html=True)
     with st.expander("Lihat Detail Karakteristik Awan Vertikal"):
         st.markdown("""
-        * **Cumulus:** Awan padat berwujud tajam gembung dengan puncak menyerupai kubis/popcorn putih cerah jika terkena matahari. Menandakan cuaca cerah stabil.
-        * **Cumulonimbus:** Awan badai raksasa menjulang tinggi hingga batas troposfer. **Sangat berbahaya bagi penerbangan** karena memicu petir, turbulensi hebat, angin putung beliung, dan hujan es.
-        * **Nimbostratus:** Lapisan awan abu-abu gelap, sangat tebal, dan tidak berbentuk yang menghasilkan hujan atau salju yang stabil dalam durasi yang lama.
-        """)
+        <ul style='color: #1e293b; font-size: 0.95rem; line-height: 1.6; margin-left: 20px; padding-left: 0;'>
+            <li><b>Cumulus:</b> Awan padat berwujud tajam gembung dengan puncak menyerupai kubis/popcorn putih cerah jika terkena matahari. Menandakan cuaca cerah stabil.</li>
+            <li><b>Cumulonimbus:</b> Awan badai raksasa menjulang tinggi hingga batas troposfer. <b>Sangat berbahaya bagi penerbangan</b> karena memicu petir, turbulensi hebat, angin putung beliung, dan hujan es.</li>
+            <li><b>Nimbostratus:</b> Lapisan awan abu-abu gelap, sangat tebal, dan tidak berbentuk yang menghasilkan hujan atau salju yang stabil dalam durasi yang lama.</li>
+        </ul>
+        """, unsafe_allow_html=True)
 
     st.markdown("<br><div class='premium-bar' style='height: 2px; opacity:0.3;'></div>", unsafe_allow_html=True)
     st.markdown("<p style='text-align: center; color: #94a3b8; font-size: 0.85rem;'>CloudX Project • Menggunakan Arsitektur MobileNetV2 Fine-Tuning</p>", unsafe_allow_html=True)
